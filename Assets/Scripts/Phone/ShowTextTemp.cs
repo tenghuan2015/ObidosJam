@@ -23,12 +23,16 @@ public class ShowTextTemp : MonoBehaviour
     }
     private void ShowChoiceText()
     {
-        bool confirm = PhoneInputController.Instance.GetPlayerOption();
-        if(confirm){
-            ChoiceMsg.text = "Confirmed";
+        int confirm = PhoneInputController.Instance.GetPlayerOption();
+        if(confirm == 1){
+            ChoiceMsg.text = "Choice A";
         }
-        else{
-            ChoiceMsg.text = "Rejected";
+        else if(confirm == 0){
+            ChoiceMsg.text = "Choice B";
+        }
+        else
+        {
+            ChoiceMsg.text = "No Choice";
         }
     }
 }

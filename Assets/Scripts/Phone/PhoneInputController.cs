@@ -27,16 +27,16 @@ public class PhoneInputController : MonoBehaviour
         
     }
     // Used in options, to get player's choice
-    public bool GetPlayerOption(){
+    public int GetPlayerOption(){
         if(lastMsg.Equals("1")){
-            return true;
+            return 1;
         }
-        else if(lastMsg.Equals("2")){
-            return false;
+        else if(lastMsg.Equals("0")){
+            return 0;
         }
         else{
-            Debug.LogError("lastMsg is not 1 or 2");
-            return false;
+            Debug.LogError("lastMsg is not 1 or 0");
+            return -1;
         }   
     }
     // Used universally, to get the last message

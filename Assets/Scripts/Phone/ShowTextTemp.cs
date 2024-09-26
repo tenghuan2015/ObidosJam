@@ -48,7 +48,4 @@ public class ShowTextTemp : MonoBehaviour
     private void PlayMusic2(){
         PhoneInputController.Instance.PlayAudio("Assets/Sounds/Dialog/P1.mp3");
     }
-    private void PlayRing(){
-        PhoneInputController.Instance.PlayRing();
-    }
 }

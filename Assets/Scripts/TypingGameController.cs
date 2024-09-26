@@ -172,7 +172,7 @@ void UpdateDisplayText()
         if (success)
         {
             success = true;
-            ResetGame();
+            //ResetGame();
             Debug.Log("Congratulations! You won!");
 
         }
@@ -206,13 +206,12 @@ void UpdateDisplayText()
             {
         // 获取每个输入的字符并添加到字符串中
             playerInputString += msg;
-
+            inputField.text = playerInputString;
         }
         }
-        
-    
-    // 判断输入的字符串是否与目标字符串相等
-    bool isEqual = playerInputString.Equals(numberStrings[currentStringIndex]);
+        if(playerInputString.Length == numberStrings[currentStringIndex].Length){
+        // 判断输入的字符串是否与目标字符串相等
+        bool isEqual = playerInputString.Equals(numberStrings[currentStringIndex]);
 
         if (isEqual)
         {
@@ -242,6 +241,10 @@ void UpdateDisplayText()
                 Debug.Log("尝试次数用尽，游戏结束。");
             }
         }
+        }
+        
+    
+
         
     
     }

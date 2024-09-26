@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using System.Collections;
 using TMPro;
 using System;
+using System.Text;
 
 public class TypingGameController : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class TypingGameController : MonoBehaviour
         UpdateDisplayText();
         StartCoroutine(StartTimer());
         //inputField.onValueChanged.AddListener(OnInputChanged);
+        // OnMessageArrived();
+
     }
 
     void Update()
@@ -50,30 +53,31 @@ public class TypingGameController : MonoBehaviour
         }
 
         // 在这里写玩家的输入（TODO： 替换这个方法）
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            Debug.Log("检测到回车键被按下");
-            // 在这里调用 CompareStrings 方法
-            CompareStrings(inputField.text);
-        }
-        if(remainingTime<=0.01f && !success){
-            if (attemptsLeft > 1)
-            {
-                attemptsLeft-=1;
-                Debug.Log($"尝试次数剩余：{attemptsLeft}");
+        // if (Input.GetKeyDown(KeyCode.Return))
+        // {
+        //     Debug.Log("检测到回车键被按下");
+        //     // 在这里调用 CompareStrings 方法
+        //     CompareStrings(inputField.text);
+        // }
+        // if(remainingTime<=0.01f && !success)
+        // {
+        //     if (attemptsLeft > 1)
+        //     {
+        //         attemptsLeft-=1;
+        //         Debug.Log($"尝试次数剩余：{attemptsLeft}");
                 
-                ResetGame();
-                // 清空输入框并更新显示的数字串
-                // inputField.text = "";
-                // UpdateDisplayText();
-            }
-            else
-            {
-                // 尝试次数用尽，结束游戏
-                EndGame(false);
-                Debug.Log("尝试次数用尽，游戏结束。");
-            }
-        }
+        //         ResetGame();
+        //         // 清空输入框并更新显示的数字串
+        //         // inputField.text = "";
+        //         // UpdateDisplayText();
+        //     }
+        //     else
+        //     {
+        //         // 尝试次数用尽，结束游戏
+        //         EndGame(false);
+        //         Debug.Log("尝试次数用尽，游戏结束。");
+        //     }
+        // }
     }
 
     // 初始化三组预定义的数字串
@@ -94,7 +98,8 @@ void UpdateDisplayText()
 
     // 启动计时器
     IEnumerator StartTimer()
-    {Debug.Log("Starting timer");
+    {
+        Debug.Log("Starting timer");
         while (remainingTime >= 0)
         {
             circularTimerImage.fillAmount = remainingTime / totalDuration;
@@ -122,43 +127,43 @@ void UpdateDisplayText()
     // }
 
     // TODO： 替换这个方法
-    public void CompareStrings(string inputString)
-    {
-        string targetString = numberStrings[currentStringIndex]; // 替换为实际的目标字符串
+    // public void CompareStrings(string inputString)
+    // {
+    //     string targetString = numberStrings[currentStringIndex]; // 替换为实际的目标字符串
 
-        bool isCorrect = inputString == targetString;
+    //     bool isCorrect = inputString == targetString;
         
-        if (isCorrect)
-        {
-            Debug.Log("输入正确！");
-            // 在这里添加正确输入的处理逻辑
-            inputField.text = "";
-            EndGame(true);
-        }
-        else
-        {
-            Debug.Log("输入错误。正确的字符串是：" + targetString);
-            // 在这里添加错误输入的处理逻辑
-            if (attemptsLeft > 1)
-            {
-                attemptsLeft-=1;
-                Debug.Log($"尝试次数剩余：{attemptsLeft}");
+    //     if (isCorrect)
+    //     {
+    //         Debug.Log("输入正确！");
+    //         // 在这里添加正确输入的处理逻辑
+    //         inputField.text = "";
+    //         EndGame(true);
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("输入错误。正确的字符串是：" + targetString);
+    //         // 在这里添加错误输入的处理逻辑
+    //         if (attemptsLeft > 1)
+    //         {
+    //             attemptsLeft-=1;
+    //             Debug.Log($"尝试次数剩余：{attemptsLeft}");
 
-                ResetGame();
-                // 清空输入框并更新显示的数字串
-                // inputField.text = "";
-                // UpdateDisplayText();
-            }
-            else
-            {
-                // 尝试次数用尽，结束游戏
-                EndGame(false);
-                Debug.Log("尝试次数用尽，游戏结束。");
-            }
-        }
+    //             ResetGame();
+    //             // 清空输入框并更新显示的数字串
+    //             // inputField.text = "";
+    //             // UpdateDisplayText();
+    //         }
+    //         else
+    //         {
+    //             // 尝试次数用尽，结束游戏
+    //             EndGame(false);
+    //             Debug.Log("尝试次数用尽，游戏结束。");
+    //         }
+    //     }
         
-        // 可以在这里添加更详细的比较逻辑，例如计算相似度等
-    }
+    //     // 可以在这里添加更详细的比较逻辑，例如计算相似度等
+    // }
 
     // 结束游戏
     void EndGame(bool success)
@@ -187,25 +192,62 @@ void UpdateDisplayText()
         // currentStringIndex = 0;
         remainingTime = 10f;
         UpdateDisplayText();
+        playerInputString = "";
         StartCoroutine(StartTimer());
     }
-    void OnMessageArrived(string msg){
-        //当输入的字符串长度小于目标字符串长度时
-        if(playerInputString.Length<numberStrings[currentStringIndex].Length){
-            // TODO: 获取每个输入的字符并添加到字符串中
+    
+ 
+    void OnMessageArrived(string msg)
+    {
+        if(msg.Length == 1)
+        {
+            Debug.Log(msg);
+            if (playerInputString.Length < numberStrings[currentStringIndex].Length)
+            {
+        // 获取每个输入的字符并添加到字符串中
+            playerInputString += msg;
+
+        }
         }
         
+    
+    // 判断输入的字符串是否与目标字符串相等
+    bool isEqual = playerInputString.Equals(numberStrings[currentStringIndex]);
+
+        if (isEqual)
+        {
+            Debug.Log("输入正确！");
+            // 在这里添加正确输入的处理逻辑
+            inputField.text = "";
+            EndGame(true);
+        }
+        else
+        {
+            //Debug.Log("输入错误。正确的字符串是：" + targetString);
+            // 在这里添加错误输入的处理逻辑
+            if (attemptsLeft > 1)
+            {
+                attemptsLeft-=1;
+                Debug.Log($"尝试次数剩余：{attemptsLeft}");
+
+                ResetGame();
+                // 清空输入框并更新显示的数字串
+                // inputField.text = "";
+                // UpdateDisplayText();
+            }
+            else
+            {
+                // 尝试次数用尽，结束游戏
+                EndGame(false);
+                Debug.Log("尝试次数用尽，游戏结束。");
+            }
+        }
         
-        // TODO: 判断输入的字符串是否与目标字符串相等
-        bool IsEqual;
-
-        if(IsEqual){
-
-        }
-        else{
-            
-        }
-
+    
     }
     
-}
+     void OnConnectionEvent(bool success)
+    {
+        
+    }
+    }

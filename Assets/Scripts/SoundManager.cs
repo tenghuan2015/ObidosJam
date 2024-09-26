@@ -5,13 +5,14 @@ public class SoundManager : MonoBehaviour
 {
     public static SoundManager instance = null;
     private AudioSource sfxSource;               // AudioSource for sound effects
-    private AudioSource musicSource;
+    private AudioSource musicSource, supportMusicSource;
 
     public AudioClip DoorKnock;
     public AudioClip Footsteps;
     public AudioClip BreakDoorNoise;
     public AudioClip ChildCrying;
     public AudioClip HardDoorKnock;
+    public AudioClip Bell;
 
     void Awake()
     {
@@ -26,6 +27,7 @@ public class SoundManager : MonoBehaviour
         }
         sfxSource = gameObject.AddComponent<AudioSource>();    // For sound effects
         musicSource = gameObject.AddComponent<AudioSource>();
+        supportMusicSource = gameObject.AddComponent<AudioSource>();
         musicSource.loop = true;
     }
 
@@ -43,7 +45,7 @@ public class SoundManager : MonoBehaviour
     {
         if (clip != null)
         {
-            while (true) // Infinite loop until you manually stop it
+            while (!AttendCall.isCallAnswered) // Infinite loop until you manually stop it
             {
                 sfxSource.clip = clip;
                 sfxSource.Play();
@@ -56,9 +58,26 @@ public class SoundManager : MonoBehaviour
             }
         }
     }
+    public IEnumerator PlaySupportingSoundLoop(AudioClip clip, float delayBetweenLoops)
+    {
+        if (clip != null)
+        {
+            while (!AttendCall.isCallAnswered) // Infinite loop until you manually stop it
+            {
+                supportMusicSource.clip = clip;
+                supportMusicSource.Play();
+                // Wait for the clip to finish playing
+                yield return new WaitForSeconds(clip.length);
+
+                // Wait for the additional delay between loops
+                yield return new WaitForSeconds(delayBetweenLoops);
+            }
+        }
+    }
     public void StopSound()
     {
         sfxSource.Stop();
+        supportMusicSource.Stop();
     }
     public bool IsPlaying()
     {

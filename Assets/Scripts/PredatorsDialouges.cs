@@ -21,47 +21,58 @@ public class PredatorsDialouges : MonoBehaviour
     public Text SupportingText;
     public Button acceptButton; 
     public Button refuseButton;
-
+    public GameObject Buttons;
+    public static int phase = 1;
     private int currentDialogueIndex = 0; 
     private int currentPhase = 1;  
     private bool playerOpenedDoor = false;
 
-
-
     void Start()
     {
-        acceptButton.gameObject.SetActive(false);
-        refuseButton.gameObject.SetActive(false);
+        Buttons.SetActive(false);
         StartDialoguePhase1();
     }
-
+    void WriteSupportingText(string str)
+    {
+        SupportingText.gameObject.SetActive(true);
+        SupportingText.text = str;
+        SupportingText.gameObject.transform.parent.gameObject.SetActive(true);
+        dialogueText.gameObject.transform.parent.gameObject.SetActive(false);
+    }
+    void WritePredatorDialogueText(string str)
+    {
+        dialogueText.gameObject.transform.parent.gameObject.SetActive(true);
+        dialogueText.text = str;
+        SupportingText.gameObject.transform.parent.gameObject.SetActive(false);
+    }
     void StartDialoguePhase1()
     {
-        StartCoroutine(DisplayDialogueSequence(PredatorManP1, GirlVsManP1, 1));
+        StartCoroutine(DisplayDialogueSequence(PredatorManP1, GirlVsManP1));
     }
-
     void StartDialoguePhase2()
     {
-        StartCoroutine(DisplayDialogueSequence(PredatorManP2, GirlVsManP2, 2));
+        StartCoroutine(DisplayDialogueSequence(PredatorManP2, GirlVsManP2));
     }
-
     void StartDialoguePhase3()
     {
-        StartCoroutine(DisplayDialogueSequence(PredatorGrandmaP3, GirlVsGrandmaP3, 3));
+        StartCoroutine(DisplayDialogueSequence(PredatorGrandmaP3, GirlVsGrandmaP3));
     }
 
-    IEnumerator DisplayDialogueSequence(Dialogue[] predatorDialogues, Dialogue[] girlDialogues, int phase)
+    IEnumerator DisplayDialogueSequence(Dialogue[] predatorDialogues, Dialogue[] girlDialogues)
     {
+        if(phase>1) AttendCall.instance.StartFromKnocking();
         currentDialogueIndex = 0;
         if(phase == 1)
         {
             for (int i = 0; i < predatorDialogues.Length; i++)
             {
-                dialogueText.text = predatorDialogues[i].sentence;
+                WritePredatorDialogueText(predatorDialogues[i].sentence);
+                //dialogueText.text = predatorDialogues[i].sentence;
                 yield return new WaitForSeconds(2f);
                 if (i < girlDialogues.Length)
                 {
-                    dialogueText.text = girlDialogues[i].sentence;
+                    WriteSupportingText(girlDialogues[i].sentence);
+                    //SupportingText.text = girlDialogues[i].sentence;
                     yield return new WaitForSeconds(2f);
                 }
             }
@@ -69,37 +80,42 @@ public class PredatorsDialouges : MonoBehaviour
         }
         else if(phase == 2)
         {
-           
-                dialogueText.text = predatorDialogues[0].sentence;
+            //dialogueText.text = predatorDialogues[0].sentence;
+            WritePredatorDialogueText(predatorDialogues[0].sentence);
+            yield return new WaitForSeconds(0.5f);
 
-                //here you enable the player detection movement
+            //here i will enable the player detect the movement
+            ShowDecisionOptions();
 
-                yield return new WaitForSeconds(1f);
-                //change supporting text here --- telling the player to pan through the predator
-                TelephoneController.isPanningEnabled=true;
             yield return new WaitForSeconds(1f);
-            dialogueText.text = predatorDialogues[1].sentence;
 
-
-            //if (i < girlDialogues.Length)
-            //{
-            //    dialogueText.text = girlDialogues[i].sentence;
-            //    yield return new WaitForSeconds(2f);
-            //}
-
+            yield return new WaitForSeconds(1f);
+            ShowDecisionOptions();
+            //WritePredatorDialogueText(predatorDialogues[1].sentence);
         }
+        else if (phase == 3)
+        {
+            //dialogueText.text = predatorDialogues[0].sentence;
+            WritePredatorDialogueText(predatorDialogues[0].sentence);
+            yield return new WaitForSeconds(0.5f);
 
+            //here i will enable the player detect the movement
+            ShowDecisionOptions();
+
+            yield return new WaitForSeconds(1f);
+            
+            yield return new WaitForSeconds(1f);
+            ShowDecisionOptions();
+            //WritePredatorDialogueText(predatorDialogues[1].sentence);
+        }
     }
-
     void ShowDecisionOptions()
     {
-        acceptButton.gameObject.SetActive(true);
-        refuseButton.gameObject.SetActive(true);
-
+        Buttons.SetActive(true);
+        SupportingText.gameObject.SetActive(false);
         acceptButton.onClick.AddListener(PlayerAccepts);
         refuseButton.onClick.AddListener(PlayerRefuses);
     }
-
     public void PlayerAccepts()
     {
         playerOpenedDoor = true;
@@ -107,13 +123,18 @@ public class PredatorsDialouges : MonoBehaviour
         dialogueText.text = "You opened the door, and you died!";
         EndGame();
     }
-
+    public void PlayerSuspects()
+    {
+        Buttons.SetActive(false);
+        dialogueText.gameObject.transform.parent.gameObject.SetActive(false);
+        TelephoneController.isPanningEnabled=true;
+    }
     public void PlayerRefuses()
     {
         Debug.Log("Player refused to open the door.");
-        acceptButton.gameObject.SetActive(false);
-        refuseButton.gameObject.SetActive(false);
-
+        Buttons.SetActive(false);
+        phase++;
+        dialogueText.gameObject.transform.parent.gameObject.SetActive(false);
         if (currentPhase == 1)
         {
             Invoke("StartDialoguePhase2", 5f); 
@@ -123,12 +144,10 @@ public class PredatorsDialouges : MonoBehaviour
             Invoke("StartDialoguePhase3", 5f); 
         }
     }
-
     void EndGame()
     {
         acceptButton.gameObject.SetActive(false);
         refuseButton.gameObject.SetActive(false);
-
         Debug.Log("End of Game");
     }
 }

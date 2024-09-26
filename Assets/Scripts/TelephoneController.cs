@@ -21,7 +21,6 @@ public class TelephoneController : MonoBehaviour
             // Apply constraintsss hereeeee
             Player.transform.position = newPosition;
         }
-        
 
 
     }

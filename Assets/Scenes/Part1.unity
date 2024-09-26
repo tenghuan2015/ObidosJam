@@ -357,6 +357,7 @@ MonoBehaviour:
   BreakDoorNoise: {fileID: 0}
   ChildCrying: {fileID: 8300000, guid: a781c48704e21ce4c802cce22bcce524, type: 3}
   HardDoorKnock: {fileID: 8300000, guid: 42f57a28b128ec545bf09fbab3b51d26, type: 3}
+  Bell: {fileID: 8300000, guid: 5b391569249d9a845953c2affeb23657, type: 3}
 --- !u!4 &738755461
 Transform:
   m_ObjectHideFlags: 0
@@ -852,7 +853,6 @@ GameObject:
   - component: {fileID: 2105086046}
   - component: {fileID: 2105086045}
   - component: {fileID: 2105086044}
-  - component: {fileID: 2105086043}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -881,23 +881,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &2105086043
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2105086041}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f286137d4dfc934e96ad09eed32b035, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FirstScene: {fileID: 7094989624029885010, guid: b658442362dd91d4480534a0c48b8389, type: 3}
-  SecondScene: {fileID: 7522424560655521681, guid: 9d34fba20d4ad1a44b8a1d735a09cae6, type: 3}
-  TimeInBetweenTheScenes: 1
-  DoorScene: {fileID: 1388287951}
-  ImgScene: {fileID: 2087336660}
 --- !u!114 &2105086044
 MonoBehaviour:
   m_ObjectHideFlags: 0

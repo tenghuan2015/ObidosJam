@@ -60,7 +60,7 @@ public class PredatorsDialouges : MonoBehaviour
 
     IEnumerator DisplayDialogueSequence(Dialogue[] predatorDialogues, Dialogue[] girlDialogues)
     {
-        if(phase>1) AttendCall.instance.StartFromKnocking();
+        if(phase>1) AttendCall.instance.StartFromKnocking(); 
         currentDialogueIndex = 0;
         if(phase == 1)
         {

@@ -16,7 +16,6 @@ public class ShowTextTemp : MonoBehaviour
         BtLastMsg.onClick.AddListener(ShowLastMsg);
         BtPlayMusic1.onClick.AddListener(PlayMusic1);
         BtPlayMusic2.onClick.AddListener(PlayMusic2);
-        BtPlayRing.onClick.AddListener(PlayRing);
     }
 
     // Update is called once per frame

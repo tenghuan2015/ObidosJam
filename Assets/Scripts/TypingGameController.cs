@@ -4,7 +4,7 @@ using System.Collections;
 using TMPro;
 using System;
 using System.Text;
-
+using UnityEditor;
 public class TypingGameController : MonoBehaviour
 {
 
@@ -28,6 +28,8 @@ public class TypingGameController : MonoBehaviour
 
     private string playerInputString = "";
 
+    [SerializeField] private AudioSource audioSource;
+
 
 
 
@@ -42,14 +44,11 @@ public class TypingGameController : MonoBehaviour
         //inputField.onValueChanged.AddListener(OnInputChanged);
         // OnMessageArrived();
         // flashEffect = GetComponent<FlashEffect>();
-       
-    }
-    void OnEnable()
-    {
-  if (animator == null)
+         if (animator == null)
             animator = GetComponent<Animator>();
 
     }
+    
     public void FailEffect()
     {
          animator.SetTrigger("Flash");
@@ -112,12 +111,15 @@ void UpdateDisplayText()
             success = true;
             //ResetGame();
             Debug.Log("Congratulations! You won!");
+            playSound("Assets/Sounds/Dialog/F1.mp3");
+            //PhoneInputController.Instance.PlayAudio("Assets/Sounds/Dialog/F1.mp3");
 
         }
         else
         {
             ResetGame();
             Debug.Log("Game Over!");
+            playSound("Assets/Sounds/Effect/NoAnswer.mp3");
         }
     }
 
@@ -141,7 +143,7 @@ void UpdateDisplayText()
         {
             Debug.Log(msg);
             if (playerInputString.Length < numberStrings[currentStringIndex].Length)
-            {
+            {playSound("Assets/Sounds/Effect/ding.mp3");
         // 获取每个输入的字符并添加到字符串中
             playerInputString += msg;
             inputField.text = playerInputString;
@@ -194,6 +196,18 @@ void UpdateDisplayText()
         
     }
     
-    
+    private void playSound(string path){
+        // the audio path should be like this: "Assets/Sounds/Dialog/F1.mp3"
+        AudioClip clip = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+        if (clip != null)
+        {
+            audioSource.clip = clip;
+            audioSource.Play();
+        }
+        else
+        {
+            Debug.LogError("can't find audio file: " + path);
+        }
+    }
 
     }

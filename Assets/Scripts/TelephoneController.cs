@@ -1,23 +1,29 @@
+using NUnit.Framework;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TelephoneController : MonoBehaviour
 {
     public float moveSpeed = 3;
     public GameObject Player;
-
+    public static bool isPanningEnabled=false;
     private void Update()
     {
-        float moveX = Input.GetAxis("Horizontal"); // Left/Right arrow keys
-        float moveY = Input.GetAxis("Vertical"); // Up/Down arrow keys
+        //Connect with telephone hereeeeee
+        if (isPanningEnabled) 
+        {
+            float moveX = Input.GetAxis("Horizontal");
+            float moveY = Input.GetAxis("Vertical");
+            Vector3 newPosition = Player.transform.position + new Vector3(moveX, moveY, 0) * moveSpeed * Time.deltaTime;
 
-        // Calculate new position
-        Vector3 newPosition = Player.transform.position + new Vector3(moveX, moveY, 0) * moveSpeed * Time.deltaTime;
+            // Apply constraintsss hereeeee
+            Player.transform.position = newPosition;
+        }
+        
 
-        //// Apply constraints
-        //newPosition.x = Mathf.Clamp(newPosition.x, xConstraints.x, xConstraints.y);
-        //newPosition.y = Mathf.Clamp(newPosition.y, yConstraints.x, yConstraints.y);
 
-        // Update the object's position
-        Player.transform.position = newPosition;
     }
+
 }

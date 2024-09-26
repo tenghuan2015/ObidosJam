@@ -12,12 +12,17 @@ public class TypingGameController : MonoBehaviour
     public TMP_Text timerText; // 计时器文本
     public bool success;
 
+   public Image circularTimerImage; // 公共变量，用于在 Inspector 中赋值
+
     private string[] numberStrings = new string[3]; // 存储三组数字串
     private int currentStringIndex = 0; // 当前显示的数字串索引
     private bool gameStarted = false;
     private float remainingTime = 10f; // 游戏时长
+    private float totalDuration = 10f;
 
     private int attemptsLeft = 3; // 剩余尝试次数
+
+    private string playerInputString = "";
     
     // public Text feedbackText;
     void Start()
@@ -44,6 +49,7 @@ public class TypingGameController : MonoBehaviour
             Debug.LogError($"发生异常: {e.Message}\n{e.StackTrace}");
         }
 
+        // 在这里写玩家的输入（TODO： 替换这个方法）
         if (Input.GetKeyDown(KeyCode.Return))
         {
             Debug.Log("检测到回车键被按下");
@@ -73,9 +79,9 @@ public class TypingGameController : MonoBehaviour
     // 初始化三组预定义的数字串
 void InitializeNumberStrings()
 {
-    numberStrings[0] = "1234567890";
-    numberStrings[1] = "0987654321";
-    numberStrings[2] = "1122334455";
+    numberStrings[0] = "9202265545";
+    numberStrings[1] = "8135377601";
+    numberStrings[2] = "1372649268";
 }
 
 // 更新显示的数字串
@@ -83,7 +89,7 @@ void UpdateDisplayText()
 {   Debug.Log("Updating display text");
     // 生成一个 0 到 numberStrings.Length - 1 之间的随机数
     currentStringIndex = UnityEngine.Random.Range(0, numberStrings.Length);
-    displayText.text = "Type: " + numberStrings[currentStringIndex];
+    displayText.text = "+" + numberStrings[currentStringIndex];
 }
 
     // 启动计时器
@@ -91,7 +97,8 @@ void UpdateDisplayText()
     {Debug.Log("Starting timer");
         while (remainingTime >= 0)
         {
-            timerText.text = "Time Left: " + remainingTime.ToString("F1");
+            circularTimerImage.fillAmount = remainingTime / totalDuration;
+            timerText.text = remainingTime.ToString("F0");
             yield return new WaitForSeconds(1f);
             remainingTime -= 1f;
         }
@@ -114,7 +121,7 @@ void UpdateDisplayText()
     //     }
     // }
 
-    // 确保方法是公共的，如果您需要从其他脚本访问它
+    // TODO： 替换这个方法
     public void CompareStrings(string inputString)
     {
         string targetString = numberStrings[currentStringIndex]; // 替换为实际的目标字符串
@@ -181,6 +188,24 @@ void UpdateDisplayText()
         remainingTime = 10f;
         UpdateDisplayText();
         StartCoroutine(StartTimer());
+    }
+    void OnMessageArrived(string msg){
+        //当输入的字符串长度小于目标字符串长度时
+        if(playerInputString.Length<numberStrings[currentStringIndex].Length){
+            // TODO: 获取每个输入的字符并添加到字符串中
+        }
+        
+        
+        // TODO: 判断输入的字符串是否与目标字符串相等
+        bool IsEqual;
+
+        if(IsEqual){
+
+        }
+        else{
+            
+        }
+
     }
     
 }

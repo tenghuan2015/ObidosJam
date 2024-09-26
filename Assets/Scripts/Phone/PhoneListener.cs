@@ -9,7 +9,7 @@ public class PhoneListener : MonoBehaviour
     {
         Debug.Log(msg);
         
-        if(msg.Equals("1"))
+        if(msg.Equals("2"))
         {
             audioSource.Play();
         }

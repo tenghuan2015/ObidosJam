@@ -12,10 +12,13 @@ public class TypingGameController : MonoBehaviour
     public TMP_Text timerText; // 计时器文本
     public bool success;
 
+   public Image circularTimerImage; // 公共变量，用于在 Inspector 中赋值
+
     private string[] numberStrings = new string[3]; // 存储三组数字串
     private int currentStringIndex = 0; // 当前显示的数字串索引
     private bool gameStarted = false;
     private float remainingTime = 10f; // 游戏时长
+    private float totalDuration = 10f;
 
     private int attemptsLeft = 3; // 剩余尝试次数
     
@@ -73,9 +76,9 @@ public class TypingGameController : MonoBehaviour
     // 初始化三组预定义的数字串
 void InitializeNumberStrings()
 {
-    numberStrings[0] = "1234567890";
-    numberStrings[1] = "0987654321";
-    numberStrings[2] = "1122334455";
+    numberStrings[0] = "9202265545";
+    numberStrings[1] = "8135377601";
+    numberStrings[2] = "1372649268";
 }
 
 // 更新显示的数字串
@@ -83,7 +86,7 @@ void UpdateDisplayText()
 {   Debug.Log("Updating display text");
     // 生成一个 0 到 numberStrings.Length - 1 之间的随机数
     currentStringIndex = UnityEngine.Random.Range(0, numberStrings.Length);
-    displayText.text = "Type: " + numberStrings[currentStringIndex];
+    displayText.text = "+" + numberStrings[currentStringIndex];
 }
 
     // 启动计时器
@@ -91,7 +94,8 @@ void UpdateDisplayText()
     {Debug.Log("Starting timer");
         while (remainingTime >= 0)
         {
-            timerText.text = "Time Left: " + remainingTime.ToString("F1");
+            circularTimerImage.fillAmount = remainingTime / totalDuration;
+            timerText.text = remainingTime.ToString("F0");
             yield return new WaitForSeconds(1f);
             remainingTime -= 1f;
         }
@@ -181,6 +185,9 @@ void UpdateDisplayText()
         remainingTime = 10f;
         UpdateDisplayText();
         StartCoroutine(StartTimer());
+    }
+    void OnMessageArrived(string msg){
+
     }
     
 }

@@ -21,6 +21,8 @@ public class TypingGameController : MonoBehaviour
     private float totalDuration = 10f;
 
     private int attemptsLeft = 3; // 剩余尝试次数
+
+    private string playerInputString = "";
     
     // public Text feedbackText;
     void Start()
@@ -47,6 +49,7 @@ public class TypingGameController : MonoBehaviour
             Debug.LogError($"发生异常: {e.Message}\n{e.StackTrace}");
         }
 
+        // 在这里写玩家的输入（TODO： 替换这个方法）
         if (Input.GetKeyDown(KeyCode.Return))
         {
             Debug.Log("检测到回车键被按下");
@@ -118,7 +121,7 @@ void UpdateDisplayText()
     //     }
     // }
 
-    // 确保方法是公共的，如果您需要从其他脚本访问它
+    // TODO： 替换这个方法
     public void CompareStrings(string inputString)
     {
         string targetString = numberStrings[currentStringIndex]; // 替换为实际的目标字符串
@@ -187,6 +190,21 @@ void UpdateDisplayText()
         StartCoroutine(StartTimer());
     }
     void OnMessageArrived(string msg){
+        //当输入的字符串长度小于目标字符串长度时
+        if(playerInputString.Length<numberStrings[currentStringIndex].Length){
+            // TODO: 获取每个输入的字符并添加到字符串中
+        }
+        
+        
+        // TODO: 判断输入的字符串是否与目标字符串相等
+        bool IsEqual;
+
+        if(IsEqual){
+
+        }
+        else{
+            
+        }
 
     }
     

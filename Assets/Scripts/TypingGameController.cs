@@ -12,6 +12,9 @@ public class TypingGameController : MonoBehaviour
     public TMP_InputField inputField; // 玩家输入框
     public TMP_Text timerText; // 计时器文本
     public bool success;
+    
+    public Animator animator;
+
 
    public Image circularTimerImage; // 公共变量，用于在 Inspector 中赋值
 
@@ -24,6 +27,11 @@ public class TypingGameController : MonoBehaviour
     private int attemptsLeft = 3; // 剩余尝试次数
 
     private string playerInputString = "";
+
+
+
+
+
     
     // public Text feedbackText;
     void Start()
@@ -33,7 +41,18 @@ public class TypingGameController : MonoBehaviour
         StartCoroutine(StartTimer());
         //inputField.onValueChanged.AddListener(OnInputChanged);
         // OnMessageArrived();
+        // flashEffect = GetComponent<FlashEffect>();
+       
+    }
+    void OnEnable()
+    {
+  if (animator == null)
+            animator = GetComponent<Animator>();
 
+    }
+    public void FailEffect()
+    {
+         animator.SetTrigger("Flash");
     }
 
     void Update()
@@ -52,32 +71,7 @@ public class TypingGameController : MonoBehaviour
             Debug.LogError($"发生异常: {e.Message}\n{e.StackTrace}");
         }
 
-        // 在这里写玩家的输入（TODO： 替换这个方法）
-        // if (Input.GetKeyDown(KeyCode.Return))
-        // {
-        //     Debug.Log("检测到回车键被按下");
-        //     // 在这里调用 CompareStrings 方法
-        //     CompareStrings(inputField.text);
-        // }
-        // if(remainingTime<=0.01f && !success)
-        // {
-        //     if (attemptsLeft > 1)
-        //     {
-        //         attemptsLeft-=1;
-        //         Debug.Log($"尝试次数剩余：{attemptsLeft}");
-                
-        //         ResetGame();
-        //         // 清空输入框并更新显示的数字串
-        //         // inputField.text = "";
-        //         // UpdateDisplayText();
-        //     }
-        //     else
-        //     {
-        //         // 尝试次数用尽，结束游戏
-        //         EndGame(false);
-        //         Debug.Log("尝试次数用尽，游戏结束。");
-        //     }
-        // }
+        
     }
 
     // 初始化三组预定义的数字串
@@ -109,63 +103,7 @@ void UpdateDisplayText()
         }
     }
 
-    // // 检查玩家输入
-    // public void OnInputChanged(string input)
-    // {
-    //     Debug.Log("Checking input");
-    //     if (!gameStarted) return;
-
-    //     if (input.Trim() == numberStrings[currentStringIndex].Trim())
-    //     {
-    //         // 成功匹配的代码
-    //     }
-
-    //     if (input == numberStrings[currentStringIndex])
-    //     {
-    //         EndGame(true);
-    //     }
-    // }
-
-    // TODO： 替换这个方法
-    // public void CompareStrings(string inputString)
-    // {
-    //     string targetString = numberStrings[currentStringIndex]; // 替换为实际的目标字符串
-
-    //     bool isCorrect = inputString == targetString;
-        
-    //     if (isCorrect)
-    //     {
-    //         Debug.Log("输入正确！");
-    //         // 在这里添加正确输入的处理逻辑
-    //         inputField.text = "";
-    //         EndGame(true);
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("输入错误。正确的字符串是：" + targetString);
-    //         // 在这里添加错误输入的处理逻辑
-    //         if (attemptsLeft > 1)
-    //         {
-    //             attemptsLeft-=1;
-    //             Debug.Log($"尝试次数剩余：{attemptsLeft}");
-
-    //             ResetGame();
-    //             // 清空输入框并更新显示的数字串
-    //             // inputField.text = "";
-    //             // UpdateDisplayText();
-    //         }
-    //         else
-    //         {
-    //             // 尝试次数用尽，结束游戏
-    //             EndGame(false);
-    //             Debug.Log("尝试次数用尽，游戏结束。");
-    //         }
-    //     }
-        
-    //     // 可以在这里添加更详细的比较逻辑，例如计算相似度等
-    // }
-
-    // 结束游戏
+    
     void EndGame(bool success)
     {
         gameStarted = false;
@@ -228,7 +166,7 @@ void UpdateDisplayText()
             {
                 attemptsLeft-=1;
                 Debug.Log($"尝试次数剩余：{attemptsLeft}");
-
+                FailEffect();
                 ResetGame();
                 // 清空输入框并更新显示的数字串
                 // inputField.text = "";
@@ -237,8 +175,10 @@ void UpdateDisplayText()
             else
             {
                 // 尝试次数用尽，结束游戏
+                FailEffect();
                 EndGame(false);
                 Debug.Log("尝试次数用尽，游戏结束。");
+            
             }
         }
         }
@@ -253,4 +193,7 @@ void UpdateDisplayText()
     {
         
     }
+    
+    
+
     }

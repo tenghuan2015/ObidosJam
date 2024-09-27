@@ -20,6 +20,8 @@ public class TelephoneController : MonoBehaviour
             Vector3 newPosition = Player.transform.position + new Vector3(moveX, moveY, 0) * moveSpeed * Time.deltaTime;
 
             // Apply constraintsss hereeeee
+
+
             Player.transform.position = newPosition;
         }
 

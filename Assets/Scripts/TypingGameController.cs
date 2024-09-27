@@ -53,7 +53,7 @@ public class TypingGameController : MonoBehaviour
     {
          animator.SetTrigger("Flash");
     }
-
+    
     void Update()
     {
         try

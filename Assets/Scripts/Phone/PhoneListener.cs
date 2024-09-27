@@ -13,9 +13,7 @@ public class PhoneListener : MonoBehaviour
         {
             audioSource.Play();
         }
-        
     }
-
     // Invoked when a connect/disconnect event occurs. The parameter 'success'
     // will be 'true' upon connection, and 'false' upon disconnection or
     // failure to connect.

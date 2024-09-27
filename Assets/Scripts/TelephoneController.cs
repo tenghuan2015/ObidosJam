@@ -9,6 +9,7 @@ public class TelephoneController : MonoBehaviour
     public float moveSpeed = 3;
     public GameObject Player;
     public static bool isPanningEnabled=false;
+    
     private void Update()
     {
         //Connect with telephone hereeeeee

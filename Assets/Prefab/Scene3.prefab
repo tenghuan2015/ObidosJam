@@ -1222,7 +1222,7 @@ GameObject:
   - component: {fileID: 6375528970577381640}
   - component: {fileID: 3399787691647673410}
   m_Layer: 5
-  m_Name: Scene2
+  m_Name: Scene3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1278,13 +1278,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f753476b0d97814893a563c83af3c9b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: 2
+  scene: 3
   Predator:
-  - sentence: "Wait! Please, I really need your help. I left something on the stove
-      before I came out. It\u2019s been hours! My whole place could catch fire!\r"
-  - sentence: " I\u2019m not asking to come in! Just a phone call! If you don\u2019t
-      help me, it might be too late. I don\u2019t want the whole building to go up
-      in flames.\r"
+  - sentence: "Pretty dear, I am so sorry to worry you. But we are so hungry and
+      thirsty. Could you help us with something to eat?\r"
   Girl: []
   dialogueText: {fileID: 1521247518498196662}
   SupportingText: {fileID: 4512460053473660623}
@@ -1293,10 +1290,10 @@ MonoBehaviour:
   suspectButton: {fileID: 6236633120383406064}
   Buttons: {fileID: 2861143780647141378}
   buttonsTexts:
-  - "Sorry I still can\u2019t let you in. You can turn to the landlord for help."
-  - That... sounds dangerous.
-  - I understand, but sorry again.
-  - Alright, you can use my phone.
+  - "Sorry nanny, but it\u2019s too late. I can\u2019t help you"
+  - "Uhh, I\u2019m not sure... "
+  - ' Poor baby! come on in!'
+  - ' I am sorry for your tragedy, but i cannot help you'
 --- !u!1 &7804840342293646922
 GameObject:
   m_ObjectHideFlags: 0

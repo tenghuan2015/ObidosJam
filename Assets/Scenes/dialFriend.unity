@@ -659,67 +659,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Padding: {x: -8, y: -5, z: -8, w: -5}
   m_Softness: {x: 0, y: 0}
---- !u!1001 &287515558
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1720729232988022051, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8699866275098040608, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_Name
-      value: PhoneInputController
-      objectReference: {fileID: 0}
-    - target: {fileID: 8699866275098040608, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2ce2137f4fd93fa41819fbc08af66af7, type: 3}
 --- !u!1 &394506266
 GameObject:
   m_ObjectHideFlags: 0
@@ -1030,7 +969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &619394801
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1846,4 +1785,3 @@ SceneRoots:
   - {fileID: 3590527}
   - {fileID: 1610999029}
   - {fileID: 1066622976}
-  - {fileID: 287515558}

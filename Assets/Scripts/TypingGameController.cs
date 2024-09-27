@@ -64,6 +64,8 @@ public class TypingGameController : MonoBehaviour
             Debug.Log("准备检查输入");
             // 检查输入的代码
             Debug.Log("输入检查完成");
+
+            TimeOut();
         }
         catch (Exception e)
         {
@@ -95,11 +97,20 @@ void UpdateDisplayText()
         Debug.Log("Starting timer");
         while (remainingTime >= 0)
         {
+            
             circularTimerImage.fillAmount = remainingTime / totalDuration;
             timerText.text = remainingTime.ToString("F0");
             yield return new WaitForSeconds(1f);
             remainingTime -= 1f;
         }
+    }
+    void TimeOut()
+    {
+//        Debug.Log(remainingTime);
+        if(remainingTime < 0.01f && !success)
+    { 
+        checkFailStatus();
+    }
     }
 
     
@@ -108,7 +119,6 @@ void UpdateDisplayText()
         gameStarted = false;
         if (success)
         {
-            success = true;
             //ResetGame();
             Debug.Log("Congratulations! You won!");
             playSound("Assets/Sounds/Dialog/F1.mp3");
@@ -117,7 +127,9 @@ void UpdateDisplayText()
         }
         else
         {
-            ResetGame();
+            //ResetGame();
+            StopAllCoroutines();
+            inputField.text = ""; // 清空输入框
             Debug.Log("Game Over!");
             playSound("Assets/Sounds/Effect/NoAnswer.mp3");
         }
@@ -158,17 +170,28 @@ void UpdateDisplayText()
             Debug.Log("输入正确！");
             // 在这里添加正确输入的处理逻辑
             inputField.text = "";
-            EndGame(true);
+            success = true;
+            EndGame(success);
         }
         else
         {
-            //Debug.Log("输入错误。正确的字符串是：" + targetString);
+            checkFailStatus();
+        }
+        }
+        
+    
+
+        
+    
+    }
+    private void checkFailStatus(){
             // 在这里添加错误输入的处理逻辑
             if (attemptsLeft > 1)
             {
                 attemptsLeft-=1;
                 Debug.Log($"尝试次数剩余：{attemptsLeft}");
                 FailEffect();
+                playSound("Assets/Sounds/Effect/NoAnswer.mp3");
                 ResetGame();
                 // 清空输入框并更新显示的数字串
                 // inputField.text = "";
@@ -178,19 +201,15 @@ void UpdateDisplayText()
             {
                 // 尝试次数用尽，结束游戏
                 FailEffect();
-                EndGame(false);
+                success = false;
+                remainingTime = 10f;
+                UpdateDisplayText();
+                EndGame(success);
                 Debug.Log("尝试次数用尽，游戏结束。");
             
             }
-        }
-        }
-        
-    
 
-        
-    
     }
-    
      void OnConnectionEvent(bool success)
     {
         

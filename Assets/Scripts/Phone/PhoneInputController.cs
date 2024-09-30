@@ -3,6 +3,7 @@ using UnityEditor;
 
 public class PhoneInputController : MonoBehaviour
 {
+    //this is a controller of phone input
     public static PhoneInputController Instance{get;private set;}
     private string lastMsg = "";
     [SerializeField] private SerialController controller;

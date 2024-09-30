@@ -1298,6 +1298,8 @@ MonoBehaviour:
   buttonsTexts:
   - "I don\u2019t think I can help. Sorry."
   - OK, you can use my phone.
+  - OK, you can use my phone.
+  - OK, you can use my phone.
 --- !u!1 &7804840342293646922
 GameObject:
   m_ObjectHideFlags: 0

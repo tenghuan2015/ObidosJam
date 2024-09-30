@@ -13,6 +13,7 @@ public class AttendCall : MonoBehaviour
     public static AttendCall instance;
     public SerialController serialController;
     public int currentSceneNumber = 0;
+    private bool isPickUp = false;
 
 
     void Awake()
@@ -50,7 +51,18 @@ public class AttendCall : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && !isCallAnswered) 
+        string str = PhoneInputController.Instance.GetLastMsg();
+        if(str.Equals("up"))
+        {
+            isPickUp = true;
+        }
+        if(str.Equals("down"))
+        {
+            isPickUp = false;
+        }
+
+
+        if( isPickUp && !isCallAnswered) 
         {
             isCallAnswered=true;
             SoundManager.instance.StopSound();

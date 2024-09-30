@@ -29,11 +29,38 @@ public class SceneGeneric : MonoBehaviour
 
     public List<string> buttonsTexts= new List<string>();
 
+    //temporary variables
+    private bool isWaitingForPlayerChoice = false;
+
     void Start()
     {
         StartDialogue();
         Buttons.SetActive(false);
 
+    }
+    void Update()
+    {
+        if (isWaitingForPlayerChoice)
+        {
+            int num = PhoneInputController.Instance.GetPlayerOption();
+            if (num == 1)
+            {
+                isWaitingForPlayerChoice = false;
+                PlayerAccepts();
+                
+            }
+            else if (num == 0)
+            {
+                isWaitingForPlayerChoice = false;
+                PlayerSuspects();
+                
+            }
+            else
+            {
+                Debug.LogError("invalid input");
+            }
+        }
+        
     }
     void StartDialogue()
     {
@@ -103,8 +130,10 @@ public class SceneGeneric : MonoBehaviour
     void ShowDecisionOptions(bool suspects, string str1, string str2)
     {
         Buttons.SetActive(true);
+        isWaitingForPlayerChoice = true;
         if (suspects)
         {
+            print("str2£º " + str1 + "str 3:" + str2);
             refuseButton.gameObject.SetActive(true);
             refuseButton.transform.GetChild(0).GetComponent<Text>().text = str1;
             suspectButton.gameObject.SetActive(true);
@@ -146,7 +175,8 @@ public class SceneGeneric : MonoBehaviour
         //phase++;
         WritePredatorDialogueText(Predator[1].sentence);
         yield return new WaitForSeconds(2);
-        ShowDecisionOptions(false, buttonsTexts[2], buttonsTexts[3]);
+        // change this bool to true
+        ShowDecisionOptions(true, buttonsTexts[2], buttonsTexts[3]);
     }
     public void PlayerRefuses()
     {

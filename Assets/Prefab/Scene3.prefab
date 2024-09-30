@@ -1292,8 +1292,8 @@ MonoBehaviour:
   buttonsTexts:
   - "Sorry nanny, but it\u2019s too late. I can\u2019t help you"
   - "Uhh, I\u2019m not sure... "
-  - ' Poor baby! come on in!'
-  - ' I am sorry for your tragedy, but i cannot help you'
+  - Poor baby! come on in!
+  - I am sorry for your tragedy, but i cannot help you
 --- !u!1 &7804840342293646922
 GameObject:
   m_ObjectHideFlags: 0

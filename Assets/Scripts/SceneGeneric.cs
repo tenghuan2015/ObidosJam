@@ -133,7 +133,7 @@ public class SceneGeneric : MonoBehaviour
         isWaitingForPlayerChoice = true;
         if (suspects)
         {
-            print("str2£º " + str1 + "str 3:" + str2);
+            print("str2ï¿½ï¿½ " + str1 + "str 3:" + str2);
             refuseButton.gameObject.SetActive(true);
             refuseButton.transform.GetChild(0).GetComponent<Text>().text = str1;
             suspectButton.gameObject.SetActive(true);

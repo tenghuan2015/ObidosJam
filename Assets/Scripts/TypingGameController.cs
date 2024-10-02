@@ -14,6 +14,17 @@ public class TypingGameController : MonoBehaviour
     public bool success;
     
     public Animator animator;
+    public Animator animator01;
+      public Animator animator02;
+      public Animator animator03;
+    public Animator animator04;
+     public Animator animator05;
+                       
+      public Animator animator06;
+       public Animator animator07;
+       public Animator animator08;
+       public Animator animator09;
+       public Animator animator00;
 
 
    public Image circularTimerImage; // 公共变量，用于在 Inspector 中赋值
@@ -151,6 +162,47 @@ void UpdateDisplayText()
  
     void OnMessageArrived(string msg)
     {
+         if(msg.Equals("1"))
+        {
+            animator01.SetTrigger("1press");
+        }
+        if(msg.Equals("2"))
+        {
+            animator02.SetTrigger("2press");
+        }
+        if(msg.Equals("3"))
+        {
+            animator03.SetTrigger("3press");
+        }
+        if(msg.Equals("4"))
+        {
+            animator04.SetTrigger("4press");
+        }
+        if(msg.Equals("5"))
+        {
+            animator05.SetTrigger("5press");
+        }
+        if(msg.Equals("6"))
+        {
+            animator06.SetTrigger("6press");
+        }
+        if(msg.Equals("7"))
+        {
+            animator07.SetTrigger("7press");
+        }
+        if(msg.Equals("8"))
+        {
+            animator08.SetTrigger("8press");
+        }
+        if(msg.Equals("9"))
+        {
+            animator09.SetTrigger("9press");
+        }
+        if(msg.Equals("0"))
+        {
+            animator00.SetTrigger("0press");
+        }
+
         if(msg.Length == 1)
         {
             Debug.Log(msg);
@@ -228,5 +280,6 @@ void UpdateDisplayText()
             Debug.LogError("can't find audio file: " + path);
         }
     }
+
 
     }

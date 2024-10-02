@@ -20,7 +20,11 @@ public class NumGenerator : MonoBehaviour
     public float displayDuration = 10f; // 号码显示的持续时间
     private GameObject currentPhoneNumber;
     private float nextSpawnTime;
-
+    private string currentNum;
+    private void Start()
+    {
+        GeneratePhoneNumber();
+    }
     void Update()
     {
         // 检查是否到了生成新号码的时间
@@ -84,7 +88,9 @@ public class NumGenerator : MonoBehaviour
 
     string GenerateRandomPhoneNumber()
     {
-        return string.Format("{0:000-0000-0000}", Random.Range(100, 999) * 10000000 + Random.Range(0, 9999999));
+        // 生成一个不含特殊字符的10位数字
+        currentNum = Random.Range(1000000000, 1000000000 + 1000000000).ToString("D10");
+        return currentNum;
     }
 
     IEnumerator DestroyAfterDelay(GameObject obj, float delay)
@@ -102,6 +108,13 @@ public class NumGenerator : MonoBehaviour
             Vector3 size = new Vector3(area.max.x - area.min.x, area.max.y - area.min.y, 0);
             Gizmos.DrawWireCube(center, size);
         }
+    }
+    public string GetCurrentRanNum(){
+        if(currentNum!=null){
+            Debug.Log("current num is :" + currentNum);
+            return currentNum;
+        }
+        return null;
     }
 
 

@@ -40,16 +40,11 @@ public class TypingGameController : MonoBehaviour
     private string playerInputString = "";
 
     [SerializeField] private AudioSource audioSource;
-
-
-
-
-
-    
-    // public Text feedbackText;
+    public NumGenerator numGenerator;
+    private string currentNum;
     void Start()
     {
-        InitializeNumberStrings();
+        //InitializeNumberStrings();
         UpdateDisplayText();
         StartCoroutine(StartTimer());
         //inputField.onValueChanged.AddListener(OnInputChanged);
@@ -69,12 +64,12 @@ public class TypingGameController : MonoBehaviour
     {
         try
         {
-            Debug.Log("Update开始执行");
-            // 您的更新逻辑
-            // ...
-            Debug.Log("准备检查输入");
-            // 检查输入的代码
-            Debug.Log("输入检查完成");
+            // Debug.Log("Update开始执行");
+            // // 您的更新逻辑
+            // // ...
+            // Debug.Log("准备检查输入");
+            // // 检查输入的代码
+            // Debug.Log("输入检查完成");
 
             TimeOut();
         }
@@ -87,24 +82,29 @@ public class TypingGameController : MonoBehaviour
     }
 
     // 初始化三组预定义的数字串
+    /*
 void InitializeNumberStrings()
 {
     numberStrings[0] = "9202265545";
     numberStrings[1] = "8135377601";
     numberStrings[2] = "1372649268";
 }
+    */
 
 // 更新显示的数字串
 void UpdateDisplayText()
-{   Debug.Log("Updating display text");
-    // 生成一个 0 到 numberStrings.Length - 1 之间的随机数
-    currentStringIndex = UnityEngine.Random.Range(0, numberStrings.Length);
-    displayText.text = "+" + numberStrings[currentStringIndex];
+{
+         Debug.Log("Updating display text");
+        // 生成一个 0 到 numberStrings.Length - 1 之间的随机数
+        //currentStringIndex = UnityEngine.Random.Range(0, numberStrings.Length);
+        currentNum = numGenerator.GetCurrentRanNum();
+        displayText.text = "+" + currentNum;
 }
 
     // 启动计时器
     IEnumerator StartTimer()
     {
+        UpdateDisplayText();
         Debug.Log("Starting timer");
         while (remainingTime >= 0)
         {
@@ -162,60 +162,55 @@ void UpdateDisplayText()
  
     void OnMessageArrived(string msg)
     {
-         if(msg.Equals("1"))
+        switch (msg)
         {
-            animator01.SetTrigger("1press");
+            case "1":
+                animator01.SetTrigger("1press");
+                break;
+            case "2":
+                animator02.SetTrigger("2press");
+                break;
+            case "3":
+                animator03.SetTrigger("3press");
+                break;
+            case "4":
+                animator04.SetTrigger("4press");
+                break;
+            case "5":
+                animator05.SetTrigger("5press");
+                break;
+            case "6":
+                animator06.SetTrigger("6press");
+                break;
+            case "7":
+                animator07.SetTrigger("7press");
+                break;
+            case "8":
+                animator08.SetTrigger("8press");
+                break;
+            case "9":
+                animator09.SetTrigger("9press");
+                break;
+            case "0":
+                animator00.SetTrigger("0press");
+                break;
         }
-        if(msg.Equals("2"))
-        {
-            animator02.SetTrigger("2press");
-        }
-        if(msg.Equals("3"))
-        {
-            animator03.SetTrigger("3press");
-        }
-        if(msg.Equals("4"))
-        {
-            animator04.SetTrigger("4press");
-        }
-        if(msg.Equals("5"))
-        {
-            animator05.SetTrigger("5press");
-        }
-        if(msg.Equals("6"))
-        {
-            animator06.SetTrigger("6press");
-        }
-        if(msg.Equals("7"))
-        {
-            animator07.SetTrigger("7press");
-        }
-        if(msg.Equals("8"))
-        {
-            animator08.SetTrigger("8press");
-        }
-        if(msg.Equals("9"))
-        {
-            animator09.SetTrigger("9press");
-        }
-        if(msg.Equals("0"))
-        {
-            animator00.SetTrigger("0press");
-        }
+        
 
         if(msg.Length == 1)
         {
             Debug.Log(msg);
-            if (playerInputString.Length < numberStrings[currentStringIndex].Length)
+            
+            if (playerInputString.Length < currentNum.Length)
             {playSound("Assets/Sounds/Effect/ding.mp3");
         // 获取每个输入的字符并添加到字符串中
             playerInputString += msg;
             inputField.text = playerInputString;
         }
         }
-        if(playerInputString.Length == numberStrings[currentStringIndex].Length){
+        if(playerInputString.Length == currentNum.Length){
         // 判断输入的字符串是否与目标字符串相等
-        bool isEqual = playerInputString.Equals(numberStrings[currentStringIndex]);
+        bool isEqual = playerInputString.Equals(currentNum);
 
         if (isEqual)
         {

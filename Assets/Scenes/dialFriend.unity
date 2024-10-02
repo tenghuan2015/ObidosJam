@@ -180,6 +180,7 @@ MonoBehaviour:
   animator00: {fileID: 1839512199}
   circularTimerImage: {fileID: 447993375}
   audioSource: {fileID: 3590529}
+  numGenerator: {fileID: 1832964655}
 --- !u!82 &3590529
 AudioSource:
   m_ObjectHideFlags: 0
@@ -2214,6 +2215,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626822199}
   m_CullTransparentMesh: 1
+--- !u!1 &1729126409
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1729126411}
+  - component: {fileID: 1729126410}
+  m_Layer: 0
+  m_Name: soundGenerator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1729126410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729126409}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea2e4ac4183c6c841a2905e582bb31d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - {fileID: 8300000, guid: 6e3ba2787e6cbaa4c96b244f39b4ce6d, type: 3}
+  - {fileID: 8300000, guid: c7d4cf81dc30ebc46b137c28b8bdb965, type: 3}
+  - {fileID: 8300000, guid: 17085a47632117b4c926357007486641, type: 3}
+  - {fileID: 8300000, guid: 4e1485bbf16606c4c8f4acae10f1272e, type: 3}
+  - {fileID: 8300000, guid: 89665d31475467540a5d02a0d22ac25f, type: 3}
+  - {fileID: 8300000, guid: 2dd4105321e00264d8abba3ce98b5c19, type: 3}
+  - {fileID: 8300000, guid: 2c2f9a7c134c30342be1fb9054a69640, type: 3}
+  - {fileID: 8300000, guid: e123dde37fa58d9409f5d29602e829d0, type: 3}
+  - {fileID: 8300000, guid: 88129a82b85cac84a9ed6b85b6152309, type: 3}
+  - {fileID: 8300000, guid: 17c05d2b07d58744082ee747a86213c2, type: 3}
+  - {fileID: 8300000, guid: 7202dd51b0069924690a5eecdc4459ab, type: 3}
+  - {fileID: 8300000, guid: cf8919c38fe94084995b2679f9d4591e, type: 3}
+  - {fileID: 8300000, guid: fbb05e3f5c06db140ab551f6bb1762f2, type: 3}
+--- !u!4 &1729126411
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1729126409}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1825966632
 GameObject:
   m_ObjectHideFlags: 0
@@ -2994,3 +3053,4 @@ SceneRoots:
   - {fileID: 1610999029}
   - {fileID: 1066622976}
   - {fileID: 2027102968}
+  - {fileID: 1729126411}

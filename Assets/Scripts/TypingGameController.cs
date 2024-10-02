@@ -29,13 +29,13 @@ public class TypingGameController : MonoBehaviour
 
    public Image circularTimerImage; // 公共变量，用于在 Inspector 中赋值
 
-    private string[] numberStrings = new string[3]; // 存储三组数字串
+    //private string[] numberStrings = new string[3]; // 存储三组数字串
     private int currentStringIndex = 0; // 当前显示的数字串索引
     private bool gameStarted = false;
     private float remainingTime = 10f; // 游戏时长
     private float totalDuration = 10f;
 
-    private int attemptsLeft = 3; // 剩余尝试次数
+    private int attemptsLeft = 6; // 剩余尝试次数
 
     private string playerInputString = "";
 

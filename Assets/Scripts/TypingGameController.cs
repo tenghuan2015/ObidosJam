@@ -5,6 +5,7 @@ using TMPro;
 using System;
 using System.Text;
 using UnityEditor;
+using UnityEngine.SceneManagement;
 public class TypingGameController : MonoBehaviour
 {
 
@@ -165,7 +166,8 @@ void UpdateDisplayText()
                     Debug.Log("Congratulations! You won!");
                     yield return PlaySoundCoroutine("Assets/Sounds/Dialog/F1.mp3");
                     TryTimes -= 1;
-                    
+                    EndingController.Instance.ShowEnding(true);
+                    SceneManager.LoadScene("end");
                     break;
                 default:
                     break;
@@ -180,7 +182,9 @@ void UpdateDisplayText()
             StopAllCoroutines();
             inputField.text = ""; // 清空输入框
             Debug.Log("Game Over!");
-            yield return PlaySoundCoroutine("Assets/Sounds/Effect/NoAnswer.mp3");
+            EndingController.Instance.ShowEnding(false);
+            SceneManager.LoadScene("end");
+            //yield return PlaySoundCoroutine("Assets/Sounds/Effect/NoAnswer.mp3");
         }
     }
 

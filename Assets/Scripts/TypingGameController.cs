@@ -166,7 +166,7 @@ void UpdateDisplayText()
                     Debug.Log("Congratulations! You won!");
                     yield return PlaySoundCoroutine("Assets/Sounds/Dialog/F1.mp3");
                     TryTimes -= 1;
-                    EndingController.Instance.ShowEnding(true);
+                    EndingController.Instance.SetEndStatus(true);
                     SceneManager.LoadScene("end");
                     break;
                 default:
@@ -182,7 +182,7 @@ void UpdateDisplayText()
             StopAllCoroutines();
             inputField.text = ""; // 清空输入框
             Debug.Log("Game Over!");
-            EndingController.Instance.ShowEnding(false);
+            EndingController.Instance.SetEndStatus(false);
             SceneManager.LoadScene("end");
             //yield return PlaySoundCoroutine("Assets/Sounds/Effect/NoAnswer.mp3");
         }

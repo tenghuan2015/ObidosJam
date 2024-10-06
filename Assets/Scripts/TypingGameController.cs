@@ -162,6 +162,7 @@ void UpdateDisplayText()
  
     void OnMessageArrived(string msg)
     {
+        //Debug.Log(msg);
         switch (msg)
         {
             case "1":

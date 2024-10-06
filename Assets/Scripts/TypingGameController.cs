@@ -11,7 +11,7 @@ public class TypingGameController : MonoBehaviour
     public TMP_Text displayText; // 显示数字串的文本
     public TMP_InputField inputField; // 玩家输入框
     public TMP_Text timerText; // 计时器文本
-    public bool success;
+    public bool IsSuccess;
     
     public Animator animator;
     public Animator animator01;
@@ -35,7 +35,7 @@ public class TypingGameController : MonoBehaviour
     private float remainingTime = 10f; // 游戏时长
     private float totalDuration = 10f;
 
-    private int attemptsLeft = 6; // 剩余尝试次数
+    private int TryTimes = 4; // 尝试次数
 
     private string playerInputString = "";
 
@@ -94,11 +94,11 @@ void InitializeNumberStrings()
 // 更新显示的数字串
 void UpdateDisplayText()
 {
-         Debug.Log("Updating display text");
+         //Debug.Log("Updating display text");
         // 生成一个 0 到 numberStrings.Length - 1 之间的随机数
         //currentStringIndex = UnityEngine.Random.Range(0, numberStrings.Length);
         currentNum = numGenerator.GetCurrentRanNum();
-        displayText.text = "+" + currentNum;
+        //displayText.text = "+" + currentNum;
 }
 
     // 启动计时器
@@ -106,6 +106,10 @@ void UpdateDisplayText()
     {
         UpdateDisplayText();
         Debug.Log("Starting timer");
+        if(TryTimes == 4)
+        {
+            SoundGenerator.Instance.PlayRanSound();
+        }
         while (remainingTime >= 0)
         {
             
@@ -118,21 +122,55 @@ void UpdateDisplayText()
     void TimeOut()
     {
 //        Debug.Log(remainingTime);
-        if(remainingTime < 0.01f && !success)
+        if(remainingTime < 0.01f && !IsSuccess)
     { 
         checkFailStatus();
     }
     }
 
     
-    void EndGame(bool success)
+    IEnumerator EndGame(bool success)
     {
         gameStarted = false;
         if (success)
         {
             //ResetGame();
-            Debug.Log("Congratulations! You won!");
-            playSound("Assets/Sounds/Dialog/F1.mp3");
+            switch (TryTimes)
+            {
+                case 4:
+                    Debug.Log("first success");
+                    
+                    yield return PlaySoundCoroutine("Assets/Sounds/NoAnswer1.mp3"); // 等待音效播放完成
+                    IsSuccess = false;
+                    TryTimes -= 1;
+                    ResetGame();
+                    break;
+                case 3:
+                    Debug.Log("second success");
+                    
+                    yield return PlaySoundCoroutine("Assets/Sounds/NoAnswer2.mp3"); // 等待音效播放完成
+                    IsSuccess = false;
+                    TryTimes -= 1;
+                    ResetGame();
+                    break;
+                case 2:
+                    Debug.Log("third success");
+                    
+                    yield return PlaySoundCoroutine("Assets/Sounds/NoAnswer3.mp3"); // 等待音效播放完成
+                    IsSuccess = false;
+                    TryTimes -= 1;
+                    ResetGame();
+                    break;
+                case 1:
+                    Debug.Log("Congratulations! You won!");
+                    yield return PlaySoundCoroutine("Assets/Sounds/Dialog/F1.mp3");
+                    TryTimes -= 1;
+                    
+                    break;
+                default:
+                    break;
+            }
+          
             //PhoneInputController.Instance.PlayAudio("Assets/Sounds/Dialog/F1.mp3");
 
         }
@@ -142,14 +180,16 @@ void UpdateDisplayText()
             StopAllCoroutines();
             inputField.text = ""; // 清空输入框
             Debug.Log("Game Over!");
-            playSound("Assets/Sounds/Effect/NoAnswer.mp3");
+            yield return PlaySoundCoroutine("Assets/Sounds/Effect/NoAnswer.mp3");
         }
     }
 
     // 开始游戏
     public void ResetGame()
     {
+        Debug.Log("reset game");
         StopAllCoroutines();
+        NumGenerator.Instance.GeneratePhoneNumber();
         gameStarted = true;
         inputField.text = ""; // 清空输入框
         // currentStringIndex = 0;
@@ -157,6 +197,7 @@ void UpdateDisplayText()
         UpdateDisplayText();
         playerInputString = "";
         StartCoroutine(StartTimer());
+        SoundGenerator.Instance.PlayRanSound();
     }
     
  
@@ -200,7 +241,7 @@ void UpdateDisplayText()
 
         if(msg.Length == 1)
         {
-            Debug.Log(msg);
+            //Debug.Log(msg);
             
             if (playerInputString.Length < currentNum.Length)
             {playSound("Assets/Sounds/Effect/ding.mp3");
@@ -217,9 +258,9 @@ void UpdateDisplayText()
         {
             Debug.Log("输入正确！");
             // 在这里添加正确输入的处理逻辑
-            inputField.text = "";
-            success = true;
-            EndGame(success);
+            inputField.text = "Calling...";
+            IsSuccess = true;
+            StartCoroutine(EndGame(IsSuccess)); // 启动协程
         }
         else
         {
@@ -234,12 +275,12 @@ void UpdateDisplayText()
     }
     private void checkFailStatus(){
             // 在这里添加错误输入的处理逻辑
-            if (attemptsLeft > 1)
+            if (TryTimes > 1)
             {
-                attemptsLeft-=1;
-                Debug.Log($"尝试次数剩余：{attemptsLeft}");
+                TryTimes-=1;
+                Debug.Log($"尝试次数剩余：{TryTimes}");
                 FailEffect();
-                playSound("Assets/Sounds/Effect/NoAnswer.mp3");
+                playSound("Assets/Sounds/WrongNumber.mp3");
                 ResetGame();
                 // 清空输入框并更新显示的数字串
                 // inputField.text = "";
@@ -249,10 +290,10 @@ void UpdateDisplayText()
             {
                 // 尝试次数用尽，结束游戏
                 FailEffect();
-                success = false;
+                IsSuccess = false;
                 remainingTime = 10f;
                 UpdateDisplayText();
-                EndGame(success);
+                StartCoroutine(EndGame(IsSuccess)); // 启动协程
                 Debug.Log("尝试次数用尽，游戏结束。");
             
             }
@@ -262,19 +303,24 @@ void UpdateDisplayText()
     {
         
     }
-    
+    private IEnumerator PlaySoundCoroutine(string path)
+    {
+    // 播放音频
+    AudioClip clip = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+    if (clip != null)
+    {
+        audioSource.clip = clip;
+        audioSource.Play();
+        // 等待音频播放完毕
+        yield return new WaitForSeconds(clip.length);
+    }
+    else
+    {
+        Debug.LogError("找不到音频文件: " + path);
+    }
+    }
     private void playSound(string path){
-        // the audio path should be like this: "Assets/Sounds/Dialog/F1.mp3"
-        AudioClip clip = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
-        if (clip != null)
-        {
-            audioSource.clip = clip;
-            audioSource.Play();
-        }
-        else
-        {
-            Debug.LogError("can't find audio file: " + path);
-        }
+        StartCoroutine(PlaySoundCoroutine(path));
     }
 
 

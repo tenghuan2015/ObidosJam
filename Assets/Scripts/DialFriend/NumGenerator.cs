@@ -5,6 +5,23 @@ using TMPro;
 
 public class NumGenerator : MonoBehaviour
 {
+    private static NumGenerator instance; // 单例实例
+    public static NumGenerator Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = FindObjectOfType<NumGenerator>();
+                if (instance == null)
+                {
+                    GameObject obj = new GameObject("NumGenerator");
+                    instance = obj.AddComponent<NumGenerator>();
+                }
+            }
+            return instance;
+        }
+    }
     public GameObject phoneNumberPrefab; // 电话号码的预制体
 
     [System.Serializable]
@@ -28,20 +45,22 @@ public class NumGenerator : MonoBehaviour
     void Update()
     {
         // 检查是否到了生成新号码的时间
+        /*
         if (Time.time >= nextSpawnTime && currentPhoneNumber == null)
         {
             GeneratePhoneNumber();
             nextSpawnTime = Time.time + spawnInterval;
         }
+        */
     }
 
-    void GeneratePhoneNumber()
+    public void GeneratePhoneNumber()
     {
         // 随机选择一个生成区域
         SpawnArea selectedArea = spawnAreas[Random.Range(0, spawnAreas.Length)];
 
         // 在选定的区域内随机生成位置
-        Vector3 randomPosition = new Vector2(
+        Vector2 randomPosition = new Vector2(
             Random.Range(selectedArea.min.x, selectedArea.max.x),
             Random.Range(selectedArea.min.y, selectedArea.max.y)
         );
@@ -111,7 +130,7 @@ public class NumGenerator : MonoBehaviour
     }
     public string GetCurrentRanNum(){
         if(currentNum!=null){
-            Debug.Log("current num is :" + currentNum);
+           // Debug.Log("current num is :" + currentNum);
             return currentNum;
         }
         return null;

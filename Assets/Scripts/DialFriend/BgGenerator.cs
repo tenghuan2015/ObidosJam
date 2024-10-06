@@ -13,6 +13,14 @@ public class BgGenerator : MonoBehaviour
     private List<GameObject> activePhoneNumbers = new List<GameObject>();
     private float nextSpawnTime;
 
+    [System.Serializable]
+    public struct SpawnArea
+    {
+        public Vector2 min;
+        public Vector2 max;
+    }
+    public SpawnArea[] spawnAreas = new SpawnArea[2]; // 定义两个生成区域
+
     void Update()
     {
         // 检查是否到了生成新号码的时间
@@ -25,17 +33,26 @@ public class BgGenerator : MonoBehaviour
 
     void GeneratePhoneNumber()
     {
-        // 随机位置
-        Vector3 randomPosition = new Vector3(
-            Random.Range(-spawnArea.x / 2, spawnArea.x / 2),
-            Random.Range(-spawnArea.y / 2, spawnArea.y / 2),
-            0
+        // 随机选择一个生成区域
+        SpawnArea selectedArea = spawnAreas[Random.Range(0, spawnAreas.Length)];
+
+        // 在选定的区域内随机生成位置
+        Vector2 randomPosition = new Vector2(
+            Random.Range(selectedArea.min.x, selectedArea.max.x),
+            Random.Range(selectedArea.min.y, selectedArea.max.y)
         );
         // 随机旋转
-        Quaternion randomRotation = Quaternion.Euler(0, 0, Random.Range(-30f, 30f));
+        //Quaternion randomRotation = Quaternion.Euler(0, 0, Random.Range(-30f, 30f));
 
         // 实例化预制体
-        GameObject phoneNumber = Instantiate(phoneNumberPrefab, randomPosition, randomRotation, transform);
+        GameObject phoneNumber = Instantiate(phoneNumberPrefab, transform);
+        RectTransform rectTransform = phoneNumber.GetComponentInChildren<RectTransform>();
+        if (rectTransform != null)
+        {
+            rectTransform.anchoredPosition = randomPosition;
+        }
+        
+        //GameObject phoneNumber = Instantiate(phoneNumberPrefab, randomPosition, randomRotation, transform);
 
         // 设置随机电话号码
         SetRandomPhoneNumber(phoneNumber);
@@ -49,7 +66,7 @@ public class BgGenerator : MonoBehaviour
 
     void SetRandomPhoneNumber(GameObject phoneNumberObject)
     {
-        TextMeshPro textMesh = phoneNumberObject.GetComponentInChildren<TextMeshPro>();
+        TMP_Text textMesh = phoneNumberObject.GetComponentInChildren<TMP_Text>();
         if (textMesh != null)
         {
             textMesh.text = GenerateRandomPhoneNumber();
@@ -66,5 +83,15 @@ public class BgGenerator : MonoBehaviour
         yield return new WaitForSeconds(delay);
         activePhoneNumbers.Remove(obj);
         Destroy(obj);
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        foreach (SpawnArea area in spawnAreas)
+        {
+            Vector3 center = this.transform.TransformPoint(new Vector3((area.min.x + area.max.x) / 2, (area.min.y + area.max.y) / 2, 0));
+            Vector3 size = new Vector3(area.max.x - area.min.x, area.max.y - area.min.y, 0);
+            Gizmos.DrawWireCube(center, size);
+        }
     }
 }

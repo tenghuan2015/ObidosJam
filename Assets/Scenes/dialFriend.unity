@@ -1752,10 +1752,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   phoneNumberPrefab: {fileID: 8885770346034354255, guid: 61b2a2b829676aa4f8a406266f086f03, type: 3}
   spawnAreas:
-  - min: {x: -650.8, y: -462.1}
-    max: {x: -477.3, y: 350.2}
-  - min: {x: 679.4, y: -450}
-    max: {x: 507.1, y: 450}
+  - min: {x: -566.7, y: -462.1}
+    max: {x: -447.4, y: 350.2}
+  - min: {x: 574.5, y: -450}
+    max: {x: 448.8, y: 450}
   spawnInterval: 10
   displayDuration: 10
 --- !u!1 &1880705393

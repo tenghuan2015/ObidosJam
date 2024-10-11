@@ -49,7 +49,7 @@ public class PhoneInputController : MonoBehaviour
     }
     public void PlayAudio(string audioPath){
         // the audio path should be like this: "Assets/Sounds/Dialog/F1.mp3"
-        AudioClip clip = AssetDatabase.LoadAssetAtPath<AudioClip>(audioPath);
+        AudioClip clip = Resources.Load<AudioClip>(audioPath);
         if (clip != null)
         {
             audioSource.clip = clip;

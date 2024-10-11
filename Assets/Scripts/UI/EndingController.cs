@@ -8,6 +8,7 @@ public class EndingController : MonoBehaviour
     private GameObject ImgGood;
     private GameObject ImgBad;
     private bool isGood;
+    private GameObject BtEnd;
     public static EndingController Instance
     {
         get
@@ -42,7 +43,10 @@ public class EndingController : MonoBehaviour
     }
     private void Start()
     {
+        
         StartCoroutine(FindImages());
+        
+        StartCoroutine(EndButton());
     }
     private IEnumerator FindImages()
 {
@@ -51,9 +55,11 @@ public class EndingController : MonoBehaviour
 
     ImgGood = GameObject.Find("bgGood");
     ImgBad = GameObject.Find("bgBad");
+        BtEnd = GameObject.Find("BtEnd");
+        BtEnd.SetActive(false);
 
-    // 继续执行其他逻辑
-    if (ImgBad == null || ImgGood == null) yield return null; // 如果任一物体未找到，退出
+        // 继续执行其他逻辑
+        if (ImgBad == null || ImgGood == null) yield return null; // 如果任一物体未找到，退出
 
     Debug.Log(isGood);
     if (isGood)
@@ -67,9 +73,22 @@ public class EndingController : MonoBehaviour
         ImgBad.SetActive(true);
     }
 }
+    private IEnumerator EndButton(){
+        yield return new WaitForSeconds(10f);
+        BtEnd.SetActive(true);
+        Button btEnd = BtEnd.GetComponent<Button>();
+        btEnd.onClick.AddListener(() =>
+        {
+            QuitGame();
+        });
+    }
     public void SetEndStatus(bool IsGood)
     {
         isGood = IsGood;
         Debug.Log(isGood);
+    }
+    private void QuitGame(){
+        Debug.Log("press the button");
+        Application.Quit();
     }
 }

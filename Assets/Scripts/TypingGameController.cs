@@ -15,18 +15,6 @@ public class TypingGameController : MonoBehaviour
     public bool IsSuccess;
     
     public Animator animator;
-    public Animator animator01;
-      public Animator animator02;
-      public Animator animator03;
-    public Animator animator04;
-     public Animator animator05;
-                       
-      public Animator animator06;
-       public Animator animator07;
-       public Animator animator08;
-       public Animator animator09;
-       public Animator animator00;
-
 
    public Image circularTimerImage; // 公共变量，用于在 Inspector 中赋值
 
@@ -36,7 +24,7 @@ public class TypingGameController : MonoBehaviour
     private float remainingTime = 10f; // 游戏时长
     private float totalDuration = 10f;
 
-    private int TryTimes = 4; // 尝试次数
+    private int TryTimes = 6; // 尝试次数
 
     private string playerInputString = "";
 
@@ -82,16 +70,6 @@ public class TypingGameController : MonoBehaviour
         
     }
 
-    // 初始化三组预定义的数字串
-    /*
-void InitializeNumberStrings()
-{
-    numberStrings[0] = "9202265545";
-    numberStrings[1] = "8135377601";
-    numberStrings[2] = "1372649268";
-}
-    */
-
 // 更新显示的数字串
 void UpdateDisplayText()
 {
@@ -107,7 +85,7 @@ void UpdateDisplayText()
     {
         UpdateDisplayText();
         Debug.Log("Starting timer");
-        if(TryTimes == 4)
+        if(TryTimes == 6)
         {
             SoundGenerator.Instance.PlayRanSound();
         }
@@ -138,10 +116,26 @@ void UpdateDisplayText()
             //ResetGame();
             switch (TryTimes)
             {
+                case 6:
+                    Debug.Log("first success");
+
+                    yield return PlaySoundCoroutine("sound/NoAnswer3"); // 等待音效播放完成
+                    IsSuccess = false;
+                    TryTimes -= 1;
+                    ResetGame();
+                    break;
+                case 5:
+                    Debug.Log("first success");
+
+                    yield return PlaySoundCoroutine("sound/NoAnswer2"); // 等待音效播放完成
+                    IsSuccess = false;
+                    TryTimes -= 1;
+                    ResetGame();
+                    break;
                 case 4:
                     Debug.Log("first success");
                     
-                    yield return PlaySoundCoroutine("Assets/Sounds/NoAnswer1.mp3"); // 等待音效播放完成
+                    yield return PlaySoundCoroutine("sound/NoAnswer1"); // 等待音效播放完成
                     IsSuccess = false;
                     TryTimes -= 1;
                     ResetGame();
@@ -149,7 +143,7 @@ void UpdateDisplayText()
                 case 3:
                     Debug.Log("second success");
                     
-                    yield return PlaySoundCoroutine("Assets/Sounds/NoAnswer2.mp3"); // 等待音效播放完成
+                    yield return PlaySoundCoroutine("sound/NoAnswer2"); // 等待音效播放完成
                     IsSuccess = false;
                     TryTimes -= 1;
                     ResetGame();
@@ -157,14 +151,14 @@ void UpdateDisplayText()
                 case 2:
                     Debug.Log("third success");
                     
-                    yield return PlaySoundCoroutine("Assets/Sounds/NoAnswer3.mp3"); // 等待音效播放完成
+                    yield return PlaySoundCoroutine("sound/NoAnswer3"); // 等待音效播放完成
                     IsSuccess = false;
                     TryTimes -= 1;
                     ResetGame();
                     break;
                 case 1:
                     Debug.Log("Congratulations! You won!");
-                    yield return PlaySoundCoroutine("Assets/Sounds/Dialog/F1.mp3");
+                    yield return PlaySoundCoroutine("sound/F1Trim");
                     TryTimes -= 1;
                     EndingController.Instance.SetEndStatus(true);
                     SceneManager.LoadScene("end");
@@ -208,39 +202,6 @@ void UpdateDisplayText()
     void OnMessageArrived(string msg)
     {
         //Debug.Log(msg);
-        switch (msg)
-        {
-            case "1":
-                animator01.SetTrigger("1press");
-                break;
-            case "2":
-                animator02.SetTrigger("2press");
-                break;
-            case "3":
-                animator03.SetTrigger("3press");
-                break;
-            case "4":
-                animator04.SetTrigger("4press");
-                break;
-            case "5":
-                animator05.SetTrigger("5press");
-                break;
-            case "6":
-                animator06.SetTrigger("6press");
-                break;
-            case "7":
-                animator07.SetTrigger("7press");
-                break;
-            case "8":
-                animator08.SetTrigger("8press");
-                break;
-            case "9":
-                animator09.SetTrigger("9press");
-                break;
-            case "0":
-                animator00.SetTrigger("0press");
-                break;
-        }
         
 
         if(msg.Length == 1)
@@ -248,7 +209,7 @@ void UpdateDisplayText()
             //Debug.Log(msg);
             
             if (playerInputString.Length < currentNum.Length)
-            {playSound("Assets/Sounds/Effect/ding.mp3");
+            {playSound("sound/ding");
         // 获取每个输入的字符并添加到字符串中
             playerInputString += msg;
             inputField.text = playerInputString;
@@ -284,7 +245,7 @@ void UpdateDisplayText()
                 TryTimes-=1;
                 Debug.Log($"尝试次数剩余：{TryTimes}");
                 FailEffect();
-                playSound("Assets/Sounds/WrongNumber.mp3");
+                playSound("sound/WrongNumber");
                 ResetGame();
                 // 清空输入框并更新显示的数字串
                 // inputField.text = "";
@@ -310,7 +271,7 @@ void UpdateDisplayText()
     private IEnumerator PlaySoundCoroutine(string path)
     {
     // 播放音频
-    AudioClip clip = AssetDatabase.LoadAssetAtPath<AudioClip>(path);
+    AudioClip clip = Resources.Load<AudioClip>(path); // 使用Resources.Load加载音频
     if (clip != null)
     {
         audioSource.clip = clip;
